@@ -1,0 +1,163 @@
+/*-- QUESTIONS RELATED TO CUSTOMERS
+     [Q1] What is the distribution of customers across states?*/
+     
+SELECT 
+	COUNT(customer_name) AS customers,
+    state
+    FROM customer_t
+    GROUP BY state;
+    
+
+/* [Q2] What is the average rating in each quarter?
+-- Very Bad is 1, Bad is 2, Okay is 3, Good is 4, Very Good is 5.*/ 
+
+WITH feed_bucket AS
+(
+	SELECT 
+		CASE
+			WHEN customer_feedback = 'very bad' THEN 1
+            WHEN customer_feedback = 'bad' THEN 2
+            WHEN customer_feedback = 'okay' THEN 3
+            WHEN customer_feedback = 'good' THEN 4
+            WHEN customer_feedback = 'verygood' THEN 5
+			END AS feedback_count,
+		quarter_number
+	FROM order_t
+)
+SELECT
+	quarter_number,
+    avg(feedback_count) avg_feedback
+FROM feed_bucket
+GROUP BY quarter_number
+ORDER BY 1;
+			
+
+
+/* [Q3] Are customers getting more dissatisfied over time?*/
+
+WITH quarterly_feedback_count AS (
+    SELECT 
+    customer_id,
+    customer_feedback,
+    quarter_number,
+    count(*) OVER (PARTITION BY quarter_number, customer_feedback) AS category_quarterly_count,
+    count(*) OVER (PARTITION BY quarter_number) AS total_quarterly_count
+    FROM order_t
+    GROUP BY customer_feedback, quarter_number, customer_id
+    )
+SELECT 
+customer_feedback,
+quarter_number,
+round(category_quarterly_count * 100 / total_quarterly_count, 2) AS category_quarterly_percentage
+FROM order_t
+GROUP BY customer_feedback, quarter_number
+ORDER BY customer_feedback;
+	
+
+/*[Q4] Which are the top 5 vehicle makers preferred by the customer.*/
+
+SELECT 
+	COUNT(customer_id) AS CUSTOMERS,
+    vehicle_maker
+FROM order_t
+	JOIN product_t USING(product_id)
+GROUP BY vehicle_maker;
+
+
+/*[Q5] What is the most preferred vehicle make in each state?*/
+SELECT
+	state,
+    count(customer_id) as customers
+FROM customer_t
+GROUP BY state;
+
+SELECT 
+	 state AS state_count, 
+    vehicle_maker
+FROM
+	(SELECT 
+		state,
+        vehicle_maker,
+	COUNT(ot.customer_id) no_of_cust,
+    RANK() OVER (PARTITION BY state ORDER BY COUNT(vehicle_maker) DESC) ranking
+    FROM order_t AS ot
+		INNER JOIN product_t AS pt ON ot.product_id = pt.product_id
+        INNER JOIN customer_t AS ct ON ot.customer_id = ct.customer_id
+	GROUP BY state, vehicle_maker) as preferred_tbl
+    WHERE ranking = 1;
+
+SELECT
+	vehicle_maker,
+    state,
+    COUNT(customer_id) OVER (PARTITION BY state) as total_state_count,
+    COUNT(customer_id) OVER (PARTITION BY vehicle_maker) as total_maker_count,
+    COUNT(customer_id) OVER (PARTITION BY state, vehicle_maker) as maker_per_state,
+    RANK() OVER (PARTITION BY vehicle_maker ORDER BY state DESC) as mk_rank
+FROM product_t AS pt
+JOIN order_t USING(product_id)
+JOIN customer_t USING(customer_id);
+
+
+
+-- ---------------------------------------------------------------------------------------------------------------------------------
+
+/*QUESTIONS RELATED TO REVENUE and ORDERS 
+
+-- [Q6] What is the trend of number of orders by quarters?*/
+
+SELECT
+	quarter_number, count(order_id) as orders_per_quarter
+FROM order_t
+GROUP BY quarter_number;
+
+-- ---------------------------------------------------------------------------------------------------------------------------------
+
+/* [Q7] What is the quarter over quarter % change in revenue?*/
+SELECT *
+FROM order_t;
+
+ SELECT vehicle_price,
+		quarter_number,
+       (vehicle_price - lag(quarter_number) over (partition by vehicle_price order by quarter_number DESC)) as diff
+FROM order_t
+GROUP BY quarter_number, vehicle_price
+LIMIT 10;
+
+-- ---------------------------------------------------------------------------------------------------------------------------------
+
+/* [Q8] What is the trend of revenue and orders by quarters?*/
+
+SELECT
+	quarter_number,sum(vehicle_price) as revenue, count(order_id) as orders
+FROM order_t
+GROUP BY quarter_number;
+
+-- ---------------------------------------------------------------------------------------------------------------------------------
+
+/* QUESTIONS RELATED TO SHIPPING 
+    [Q9] What is the average discount offered for different types of credit cards?*/
+
+SELECT
+	credit_card_type, AVG(discount) as average,
+    sum(discount) as total    
+FROM order_t
+	JOIN customer_t USING (customer_id)
+GROUP BY credit_card_type;
+
+-- OR AS A PERCENTAGE
+
+SELECT
+	credit_card_type, AVG(discount) * 100 / sum(discount) as percent    
+FROM order_t
+	JOIN customer_t USING (customer_id)
+GROUP BY credit_card_type;
+
+-- ---------------------------------------------------------------------------------------------------------------------------------
+
+/* [Q10] What is the average time taken to ship the placed orders for each quarters?*/
+
+SELECT 
+    AVG(DATEDIFF(order_date, ship_date)) as av_days,
+    quarter_number
+FROM order_t
+GROUP BY quarter_number;
