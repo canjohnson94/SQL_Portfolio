@@ -1,0 +1,26 @@
+--I created a table to organize my own personal bookshelf collection based on the authors, what shelf they sit on, color of the book,
+and the price. This table will help me find the books I need faster for when I expand my collection to open up a bookstore-- 
+
+
+
+CREATE TABLE bookshelf (ID INTEGER PRIMARY KEY, Name TEXT, Color TEXT, Author TEXT, Shelf Num INTEGER, price NUMERIC); 
+
+INSERT INTO bookshelf VALUES (1, "Humans of New York", "White", "Brandon Stanton", 1, 19.99);
+INSERT INTO bookshelf VALUES (2, "Farm to Table", "Black", "Publications International", 1, 12.50);
+INSERT INTO bookshelf VALUES (3, "Redeeming Love", "Red Gold", "Francine Rivers", 1, 19.47);
+INSERT INTO bookshelf VALUES (4, "Sons of Encouragement", "Red Gold", "Francine Rivers", 1, 19.99);
+INSERT INTO bookshelf VALUES (5, "Red Rising", "Black", "Pierce Brown", 2, 15.99);
+INSERT INTO bookshelf VALUES (6, "The Chemist", "Silver", "Stephanie Meyer", 2, 24.53);
+INSERT INTO bookshelf VALUES (7, "Memories", "Black", "Leav", 2, 12.99);
+INSERT INTO bookshelf VALUES (8, "The Five Love Languages", "Purple", "Gary Chapman", 2, 18.99);
+INSERT INTO bookshelf VALUES (9, "The Wine Bible", "Red", "Karen MacNiel", 2, 24.99);
+INSERT INTO bookshelf VALUES (10, "The Lord of the Rings", "Grey", "JRR Tolkein", 3, 24.49);
+INSERT INTO bookshelf VALUES (11, "Harry Potter and the Cursed Child", "Yellow", "Leav", 3, 22.59);
+INSERT INTO bookshelf VALUES (12, "Drawing on the Right Side of the Brain", "Gold", "Betty Edwards", 1, 15.42);
+INSERT INTO bookshelf VALUES (13, "A Broken Blade", "Black", "Melissa Blair", 3, 16.99);
+INSERT INTO bookshelf VALUES (14, "The Sword Defiant", "Black Blue", "Gareth Hanrahan", 3, 18.22);
+INSERT INTO bookshelf VALUES (15, "Tress of the Emerald Sea", "Green", "Brandon Sanderson", 3, 29.49);
+
+SELECT name, author, shelf, price 
+FROM bookshelf
+ORDER BY price;
