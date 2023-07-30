@@ -18,42 +18,37 @@ what the after-sales feedback was, and so on.*/
 
 
 
-/*-- QUESTIONS RELATED TO CUSTOMERS
-     [Q1] What is the distribution of customers across states?*/
+/* Here I find the distribution of customers across states*/
      
-SELECT 
-	COUNT(customer_name) AS customers,
+SELECT COUNT(customer_name) AS customers,
     state
     FROM customer_t
     GROUP BY state;
     
 
-/* [Q2] What is the average rating in each quarter?
--- Very Bad is 1, Bad is 2, Okay is 3, Good is 4, Very Good is 5.*/ 
+/* I find the average rating per quarter*/ 
 
 WITH feed_bucket AS
-(
-	SELECT 
-		CASE
-			WHEN customer_feedback = 'very bad' THEN 1
-            WHEN customer_feedback = 'bad' THEN 2
-            WHEN customer_feedback = 'okay' THEN 3
-            WHEN customer_feedback = 'good' THEN 4
-            WHEN customer_feedback = 'verygood' THEN 5
-			END AS feedback_count,
-		quarter_number
-	FROM order_t
-)
+(SELECT 
+	CASE
+	WHEN customer_feedback = 'very bad' THEN 1
+        WHEN customer_feedback = 'bad' THEN 2
+        WHEN customer_feedback = 'okay' THEN 3
+        WHEN customer_feedback = 'good' THEN 4
+        WHEN customer_feedback = 'verygood' THEN 5
+		END AS feedback_count,
+	quarter_number
+	FROM order_t )
 SELECT
 	quarter_number,
     avg(feedback_count) avg_feedback
-FROM feed_bucket
-GROUP BY quarter_number
-ORDER BY 1;
+    FROM feed_bucket
+    GROUP BY quarter_number
+    ORDER BY 1;
 			
 
 
-/* [Q3] Are customers getting more dissatisfied over time?*/
+/* I found out if customers are getting more dissatisfied over time*/
 
 WITH quarterly_feedback_count AS (
     SELECT 
@@ -74,7 +69,7 @@ GROUP BY customer_feedback, quarter_number
 ORDER BY customer_feedback;
 	
 
-/*[Q4] Which are the top 5 vehicle makers preferred by the customer.*/
+/*The top 5 vehicle makers preferred by the customer*/
 
 SELECT 
 	COUNT(customer_id) AS CUSTOMERS,
@@ -84,12 +79,10 @@ FROM order_t
 GROUP BY vehicle_maker;
 
 
-/*[Q5] What is the most preferred vehicle make in each state?*/
-SELECT
-	state,
-    count(customer_id) as customers
-FROM customer_t
-GROUP BY state;
+/*The most preferred vehicle make in each state?*/
+SELECT state, count(customer_id) as customers
+	FROM customer_t
+	GROUP BY state;
 
 SELECT 
 	 state AS state_count, 
