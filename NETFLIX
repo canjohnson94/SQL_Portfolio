@@ -1,6 +1,12 @@
 /*This project utilized data from the following Netflix dataset:*/
 
-/*In this project I was able to join the two tables together in order to see all of the available information below as well as extract specific information related to the movies and directors*/ 
+/*In this project I was able to join the two tables together in order to see all of the available information below as well as extract specific information related to the movies and directors*/
+
+/* 1. How many movie titles are there in the database? (movies only, not tv shows)
+   2. When was the most recent batch of tv shows and/or movies added to the database?
+   3. List all the movies and tv shows in alphabetical order.
+   4. Who was the Director for the movie The Starling?
+   5. What is the oldest movie in the database and what year was it made?*/ 
 
 -----------------------------------------------------------------------------
 
