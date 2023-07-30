@@ -1,0 +1,45 @@
+/* In this project, I made my own table with a small set of “famous people”, then I made two more tables about who they are 
+married to and the type of celebrity they are. I join these tables together to create readable lists.*/
+
+
+CREATE TABLE celebrities (id INTEGER PRIMARY KEY, full_name TEXT, c_type TEXT);
+
+INSERT INTO celebrities (id, full_name, c_type) VALUES (1, "Ryan Reynolds", "actor");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (2, "Billy Crudup", "actor");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (3, "Sterling Taylor", "Photographer");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (4, "Daniel Fryer", "investor");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (5, "Stone Burleson", "loan originator");
+    
+
+
+CREATE TABLE celebrity_wives (id INTEGER PRIMARY KEY, wives TEXT);
+    
+INSERT INTO celebrity_wives (id, wives) VALUES (1, "Blake Lively");
+INSERT INTO celebrity_wives (id, wives) VALUES (2, "Naomi Watts");
+INSERT INTO celebrity_wives (id, wives) VALUES (3, "Jessy Schram");
+INSERT INTO celebrity_wives (id, wives) VALUES (4, "Taylor Hill");
+INSERT INTO celebrity_wives (id, wives) VALUES (5, "Morgan Sumianer");
+    
+
+
+CREATE TABLE wedding_date (id INTEGER PRIMARY KEY, name TEXT);
+    
+INSERT INTO wedding_date (id, name) VALUES (1, "September 9th");
+INSERT INTO wedding_date (id, name) VALUES (2, "null");
+INSERT INTO wedding_date (id, name) VALUES (3, "June 18th");
+INSERT INTO wedding_date (id, name) VALUES (4, "June 10th");
+INSERT INTO wedding_date (id, name) VALUES (5, "May 28th");
+
+
+SELECT celebrities.id, full_name, celebrities.c_type, celebrity_wives.wives, wedding_date.name
+FROM celebrities
+LEFT OUTER JOIN celebrity_wives
+ON celebrities.id = celebrity_wives.id
+LEFT OUTER JOIN wedding_date
+ON celebrities.id = wedding_date.id
+GROUP BY celebrities.full_name
+ORDER BY celebrities.id ASC;
+
+
+/*Here I select the celebrities full name along with what kind of celebrity they are, their wives and their wedding dates.*/
+/* I join all three tables by what they have in common which is their ID's. I group the tables by the celebrities full names and order them by their id's in ascending order.*/
