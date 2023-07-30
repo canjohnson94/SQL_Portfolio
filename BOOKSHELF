@@ -1,7 +1,11 @@
 --I created a table to organize my own personal bookshelf collection based on the authors, what shelf they sit on, color of the book,
-and the price. This table will help me find the books I need faster for when I expand my collection to open up a bookstore-- 
+and the price. This table will help me find the books I need faster-- 
 
+SELECT name, author, shelf, price 
+FROM bookshelf
+ORDER BY price;
 
+------------------------------------------------------
 
 CREATE TABLE bookshelf (ID INTEGER PRIMARY KEY, Name TEXT, Color TEXT, Author TEXT, Shelf Num INTEGER, price NUMERIC); 
 
@@ -20,7 +24,3 @@ INSERT INTO bookshelf VALUES (12, "Drawing on the Right Side of the Brain", "Gol
 INSERT INTO bookshelf VALUES (13, "A Broken Blade", "Black", "Melissa Blair", 3, 16.99);
 INSERT INTO bookshelf VALUES (14, "The Sword Defiant", "Black Blue", "Gareth Hanrahan", 3, 18.22);
 INSERT INTO bookshelf VALUES (15, "Tress of the Emerald Sea", "Green", "Brandon Sanderson", 3, 29.49);
-
-SELECT name, author, shelf, price 
-FROM bookshelf
-ORDER BY price;
