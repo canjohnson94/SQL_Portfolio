@@ -1,6 +1,22 @@
 /* In this project, I made my own table with a small set of “famous people”, then I made two more tables about who they are 
 married to and the type of celebrity they are. I join these tables together to create readable lists.*/
 
+----------------------------------------------------------------------------------------------------------
+
+/*Here I select the celebrities full name along with what kind of celebrity they are, wives, wedding dates, venue/location information, and the season they married in.*/
+/* I join all three tables by what they have in common which is their ID's. I group the tables by the celebrities full names and order them by their id's in ascending order.*/
+
+SELECT celebrities.id, full_name, celebrities.c_type, celebrity_wives.wives, wedding_info.venue, wedding_info.date, wedding_info.season
+FROM celebrities
+LEFT OUTER JOIN celebrity_wives
+ON celebrities.id = celebrity_wives.id
+LEFT OUTER JOIN wedding_info
+ON celebrities.id = wedding_info.id
+GROUP BY celebrities.full_name
+ORDER BY celebrities.id ASC;
+
+----------------------------------------------------------------------------------------------------------
+
 
 CREATE TABLE celebrities (id INTEGER PRIMARY KEY, full_name TEXT, c_type TEXT);
 
@@ -59,17 +75,3 @@ INSERT INTO wedding_info (id, date, venue, season) VALUES (12, "June 2018", "Sco
 INSERT INTO wedding_info (id, date, venue, season) VALUES (13, "December 2010", "Maravilla Gardens", "Winter");
 INSERT INTO wedding_info (id, date, venue, season) VALUES (14, "July 4, 2014", "Los Angeles", "Summer");
 INSERT INTO wedding_info (id, date, venue, season) VALUES (15, "October 17, 2013", "Newhall Mansion", "Fall");
-
-
-SELECT celebrities.id, full_name, celebrities.c_type, celebrity_wives.wives, wedding_info.venue, wedding_info.date, wedding_info.season
-FROM celebrities
-LEFT OUTER JOIN celebrity_wives
-ON celebrities.id = celebrity_wives.id
-LEFT OUTER JOIN wedding_info
-ON celebrities.id = wedding_info.id
-GROUP BY celebrities.full_name
-ORDER BY celebrities.id ASC;
-
-
-/*Here I select the celebrities full name along with what kind of celebrity they are, wives, wedding dates, venue/location information, and the season they married in.*/
-/* I join all three tables by what they have in common which is their ID's. I group the tables by the celebrities full names and order them by their id's in ascending order.*/
