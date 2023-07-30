@@ -9,6 +9,16 @@ INSERT INTO celebrities (id, full_name, c_type) VALUES (2, "Billy Crudup", "acto
 INSERT INTO celebrities (id, full_name, c_type) VALUES (3, "Sterling Taylor", "Photographer");
 INSERT INTO celebrities (id, full_name, c_type) VALUES (4, "Daniel Fryer", "investor");
 INSERT INTO celebrities (id, full_name, c_type) VALUES (5, "Stone Burleson", "loan originator");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (6, "Hugh Jackman", "actor");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (7, "Matt Damon", "actor");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (8, "Nick Jonas", "actor");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (9, "George Clooney", "actor");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (10, "Ryan Gosling", "actor");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (11, "Joe Jonas", "actor");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (12, "Kit Harington", "actor");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (13, "Chris Hemsworth", "actor");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (14, "Ashton Kutcher", "actor");
+INSERT INTO celebrities (id, full_name, c_type) VALUES (15, "Dax Shepherd", "actor");
     
 
 
@@ -19,27 +29,47 @@ INSERT INTO celebrity_wives (id, wives) VALUES (2, "Naomi Watts");
 INSERT INTO celebrity_wives (id, wives) VALUES (3, "Jessy Schram");
 INSERT INTO celebrity_wives (id, wives) VALUES (4, "Taylor Hill");
 INSERT INTO celebrity_wives (id, wives) VALUES (5, "Morgan Sumianer");
+INSERT INTO celebrity_wives (id, wives) VALUES (6, "Deborah Lee");
+INSERT INTO celebrity_wives (id, wives) VALUES (7, "Luciano Barroso");
+INSERT INTO celebrity_wives (id, wives) VALUES (8, "Priyanka Chopra");
+INSERT INTO celebrity_wives (id, wives) VALUES (9, "Amal Clooney");
+INSERT INTO celebrity_wives (id, wives) VALUES (10, "Eva Mendez");
+INSERT INTO celebrity_wives (id, wives) VALUES (11, "Sophie Turner");
+INSERT INTO celebrity_wives (id, wives) VALUES (12, "Rose Leslie");
+INSERT INTO celebrity_wives (id, wives) VALUES (13, "Elsa Pataky");
+INSERT INTO celebrity_wives (id, wives) VALUES (14, "Mila Kunis");
+INSERT INTO celebrity_wives (id, wives) VALUES (15, "Kristen Bell");
     
 
 
-CREATE TABLE wedding_date (id INTEGER PRIMARY KEY, name TEXT);
+CREATE TABLE wedding_info (id INTEGER PRIMARY KEY, date TEXT, venue TEXT, season TEXT);
     
-INSERT INTO wedding_date (id, name) VALUES (1, "September 9th");
-INSERT INTO wedding_date (id, name) VALUES (2, "null");
-INSERT INTO wedding_date (id, name) VALUES (3, "June 18th");
-INSERT INTO wedding_date (id, name) VALUES (4, "June 10th");
-INSERT INTO wedding_date (id, name) VALUES (5, "May 28th");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (1, "September 9, 2012", "Vellano Estate", "Fall");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (2, "2023", "The Willows", "Spring");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (3, "June 18, 2023", "Maravilla Gardens", "Summer");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (4, "June 10, 2023", "Llano Estacado", "Summer");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (5, "May 28, 2023", "Newhall Mansion", "Summer");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (6, "April 11, 1996", "Toorak", "Spring");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (7, "2005", "Llano Estate", "Winter");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (8, "null", "Maravilla Gardens", "Fall");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (9, "September 27, 2014", "Ca' Forsetti", "Fall");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (10, "2015", "Ken's Mansion", "Spring");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (11, "May 1, 2019", "Le Chateau de Tourreau", "Summer");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (12, "June 2018", "Scotland", "Summer");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (13, "December 2010", "Maravilla Gardens", "Winter");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (14, "July 4, 2014", "Los Angeles", "Summer");
+INSERT INTO wedding_info (id, date, venue, season) VALUES (15, "October 17, 2013", "Newhall Mansion", "Fall");
 
 
-SELECT celebrities.id, full_name, celebrities.c_type, celebrity_wives.wives, wedding_date.name
+SELECT celebrities.id, full_name, celebrities.c_type, celebrity_wives.wives, wedding_info.venue, wedding_info.date, wedding_info.season
 FROM celebrities
 LEFT OUTER JOIN celebrity_wives
 ON celebrities.id = celebrity_wives.id
-LEFT OUTER JOIN wedding_date
-ON celebrities.id = wedding_date.id
+LEFT OUTER JOIN wedding_info
+ON celebrities.id = wedding_info.id
 GROUP BY celebrities.full_name
 ORDER BY celebrities.id ASC;
 
 
-/*Here I select the celebrities full name along with what kind of celebrity they are, their wives and their wedding dates.*/
+/*Here I select the celebrities full name along with what kind of celebrity they are, wives, wedding dates, venue/location information, and the season they married in.*/
 /* I join all three tables by what they have in common which is their ID's. I group the tables by the celebrities full names and order them by their id's in ascending order.*/
