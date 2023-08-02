@@ -61,3 +61,17 @@ WHERE Product like '%Batteries%'
 9. SELECT distinct Product, Price
 FROM BIT_DB.FebSales 
 WHERE Price like '%.99'
+
+10. SELECT count(orderid), location 
+FROM BIT_DB.jansales
+WHERE location LIKE '%NY%'
+AND length(orderid) = 6
+AND orderid <> 'Order ID'
+GROUP BY location
+HAVING COUNT(orderID)>2
+
+11. SELECT sum(Quantity) as quantity,
+Product
+FROM BIT_DB.FebSales 
+WHERE Product like '%Headphones%'
+GROUP BY Product
