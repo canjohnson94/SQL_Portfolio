@@ -1,0 +1,21 @@
+/* the following written SQL code was taken from the Chinook Media dataset. I pulled info around
+Chinook Medias sales and specific customer information.*/
+
+SELECT customerid, firstname, lastname, country
+FROM customers
+WHERE country !='US';
+
+
+SELECT customerid, firstname, lastname, country
+FROM customers
+WHERE country ='Brazil';
+
+
+SELECT invoices.invoiceid, firstname, lastname, invoices.invoicedate, invoices.billingcountry
+FROM customers
+JOIN invoices 
+    ON customers.customerid = invoices.customerid
+WHERE country ='Brazil'
+GROUP BY firstname, lastname
+ORDER BY invoices.invoiceid ASC;
+
