@@ -19,3 +19,34 @@ WHERE country ='Brazil'
 GROUP BY firstname, lastname
 ORDER BY invoices.invoiceid ASC;
 
+SELECT firstname, lastname, title
+FROM employees
+WHERE title ='Sales Support Agent';
+
+SELECT DISTINCT billingcountry
+FROM invoices;
+
+SELECT invoices.invoiceid, employees.firstname as rep_firstname, employees.lastname as rep_lastname, supportrepid
+FROM customers
+JOIN employees ON employees.employeeid = customers.supportrepid
+JOIN invoices ON invoices.customerid = customers.customerid
+GROUP BY employees.firstname, employees.lastname;
+
+SELECT invoices.invoiceid, firstname, lastname, employees.firstname AS sales_agentfn, employees.lastname AS sales_agentln, invoices.total
+FROM customers
+JOIN employees ON employees.employeeid = customers.supportrepid
+JOIN invoices ON invoices.customerid = customers.customerid
+GROUP BY employees.firstname, employees.lastname;
+
+SELECT count(invoiceid)
+FROM invoices
+WHERE invoicedate LIKE '%2009%';
+
+SELECT SUM(total)
+FROM invoices
+WHERE invoicedate LIKE '%2009%';
+
+SELECT name, invoice_items.invoiceid
+FROM tracks
+JOIN invoice_items ON invoice_items.trackid = tracks.trackid
+ORDER BY invoice_items.invoiceid ASC;
